@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-api-service
+  namespace: much-to-do
+spec:
+  type: ClusterIP
+  selector:
+    app: backend-api
+  ports:
+    - port: 80
+      targetPort: 8080

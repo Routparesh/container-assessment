@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-api-config
+  namespace: much-to-do
+data:
+  PORT: '8080'
+  LOG_LEVEL: 'DEBUG'
+  LOG_FORMAT: 'json'
+  ENABLE_CACHE: 'false'
