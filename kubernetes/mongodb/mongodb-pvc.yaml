@@ -4,6 +4,7 @@ metadata:
   name: mongo-pvc
   namespace: much-to-do
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:

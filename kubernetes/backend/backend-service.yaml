@@ -4,9 +4,10 @@ metadata:
   name: backend-api-service
   namespace: much-to-do
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: backend-api
   ports:
     - port: 80
       targetPort: 8080
+      nodePort: 30007

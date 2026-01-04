@@ -21,12 +21,17 @@ spec:
           ports:
             - containerPort: 8080
 
-          # ConfigMap + Secret
+          # Non-sensitive config only
           envFrom:
             - configMapRef:
                 name: backend-api-config
-            - secretRef:
-                name: backend-api-secret
+
+          # Mount .env file (REQUIRED for Viper)
+          volumeMounts:
+            - name: backend-env
+              mountPath: /app/.env
+              subPath: .env
+              readOnly: true
 
           # Resource requests & limits
           resources:
@@ -51,3 +56,8 @@ spec:
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 10
+
+      volumes:
+        - name: backend-env
+          secret:
+            secretName: backend-api-secret
