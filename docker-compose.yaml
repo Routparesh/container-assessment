@@ -1,0 +1,40 @@
+services:
+  api:
+    build:
+      context: ./Server/MuchToDo
+      dockerfile: Dockerfile
+    container_name: backend-api
+    image: routparesh/backend-api:latest
+    ports:
+      - '8080:8080'
+    env_file:
+      - ./Server/.env
+    volumes:
+      - ./Server/.env:/app/.env:ro
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - backend-network
+
+  mongo:
+    image: mongo:7.0
+    container_name: mongo
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend-network
+
+volumes:
+  mongo-data:
+
+networks:
+  backend-network:
+    driver: bridge
